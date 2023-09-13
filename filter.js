@@ -79,7 +79,7 @@ const data = [
             displayProducts(data);
          }
   })
-  const setCategoties=()=>{
+  const setCategories=()=>{
 
       const cats=data.map(item=>item.cat);
       // const uniqueCategories=[...new Set([].concat(...cats))]  ==> unique values
@@ -96,10 +96,23 @@ const data = [
               
   }
   categoriesContainer.addEventListener('click',(e)=>{
-        console.log(e.target);
+(e.target.textContent=='All')? displayProducts(data) 
+: displayProducts(data.filter(item=>item.cat.toLowerCase().indexOf(e.target.textContent.toLowerCase())!=-1))
   })
-  
-  setCategoties();
-  
+  setCategories();
+
+  const setPrice=()=>{
+    const price=data.map(item=>item.price);
+    const maxRange= Math.max(...price);
+    const minRange= Math.min(...price);
+    priceRange.value=maxRange;
+    priceValue.textContent= '$ '+maxRange;
+  }
+  // get min of prodcut by range input
+  priceRange.addEventListener('input',(e)=>{
+    displayProducts(data.filter(item=> item.price<=e.target.value));
+  })
+   
+  setPrice();
 
 
